@@ -1,0 +1,67 @@
+@import "mixins";
+
+html {
+    height: 100%;
+}
+
+body {
+    color: $text-color;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin-bottom: 20px;
+}
+
+.wrapper {
+    max-width: 320px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 20px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 16px;
+    text-align: center;
+}
+
+dd {
+    @include clearfix();
+    margin: 0;
+}
+
+/**************
+ * Form fields
+ **************/
+[type="radio"] {
+    display: none;
+}
+
+[type="radio"] + label {
+    @include button();
+
+    width: 30%;
+    margin-right: 5%;
+
+    &:last-child {
+        margin-right: 0;
+    }
+}
+
+[type="radio"]:checked + label {
+    @include button--active();
+
+    &:last-child {
+        margin-right: 0;
+    }
+}
+
+[type="submit"] {
+    @include button();
+    margin-top: 20px;
+    width: 100%;
+}
+
+[type="text"] {
+    @include text-input();
+}
