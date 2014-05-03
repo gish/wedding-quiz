@@ -12,44 +12,13 @@
     <div class="wrapper">
         <h1>Åsa och Eriks bröllopsquiz</h1>
         <form method="post" action="/">
-            <dl class="question-list">
-                <dt>
-                    <h2>Fråga 1</h2>
-                </dt>
-                <dd>
-                    <input type="radio" value="1" name="question-1" class="option" id="question-1-1">
-                        <label for="question-1-1">1</label>
-                    <input type="radio" value="2" name="question-1" class="option" id="question-1-2">
-                        <label for="question-1-2">2</label>
-                    <input type="radio" value="3" name="question-1" class="option" id="question-1-3">
-                        <label for="question-1-3">3</label>
-                </dd>
-                <dt>
-                    <h2>Fråga 2</h2>
-                </dt>
-                <dd>
-                    <input type="radio" value="1" name="question-2" class="option" id="question-2-1">
-                        <label for="question-2-1">1</label>
-                    <input type="radio" value="2" name="question-2" class="option" id="question-2-2">
-                        <label for="question-2-2">2</label>
-                    <input type="radio" value="3" name="question-2" class="option" id="question-2-3">
-                        <label for="question-2-3">3</label>
-                </dd>
-                <dt>
-                    <h2>Fråga 3</h2>
-                </dt>
-                <dd>
-                    <input type="radio" value="1" name="question-3" class="option" id="question-3-1">
-                        <label for="question-3-1">1</label>
-                    <input type="radio" value="2" name="question-3" class="option" id="question-3-2">
-                        <label for="question-3-2">2</label>
-                    <input type="radio" value="3" name="question-3" class="option" id="question-3-3">
-                        <label for="question-3-3">3</label>
-                </dd>
+            <dl data-type="multichoice">
+            </dl>
+            <dl>
                 <dt><h2>Vad är svaret på utslagsfrågan?</h2></dt>
                 <dd><input type="text" name="challenge" class="text-input"></dd>
                 <dt><h2>Glöm inte att skriva vem som har svarat</h2></dt>
-                <dd><input type="text" name="participants" class="text-input"></dd>
+                <dd><input type="text" name="participant-name" class="text-input"></dd>
                 <dt></dt>
                 <dd><input type="submit" value="Skicka in" class="button-submit"></dd>
             </dl>
