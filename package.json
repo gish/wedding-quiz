@@ -16,6 +16,8 @@
     "mongoose": "~3.8.8",
     "node-sass": "~0.8.6",
     "coffee-middleware": "~0.2.1",
-    "coffee-script": "~1.7.1"
+    "coffee-script": "~1.7.1",
+    "browserify-middleware": "~2.6.0",
+    "coffeeify": "~0.6.0"
   }
 }
