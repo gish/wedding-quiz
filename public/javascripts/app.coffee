@@ -27,16 +27,7 @@ renderQuiz = ->
     renderQuizQuestion num for num in [1..total] by 1
 
 
-setupListeners = ->
-  ($ document).ready ->
-    do renderQuiz
-
-  ($ 'form').on 'submit', (e) ->
-    e.preventDefault()
-    do submitQuiz
-
-
-submitQuiz = ->
+getMultiChoiceAnswers = ->
   answers = {}
   $multiChoice = ($ '[name^="option"]:checked')
   $multiChoice.each ->
@@ -44,17 +35,34 @@ submitQuiz = ->
     num = ($choice.attr 'name').replace 'option-', ''
     choice = $choice.attr 'value'
     answers[num] = choice
+  answers
 
-  answers.challenge = ($ '[name="challenge"]').val()
-  answers.participantName = ($ '[name="participant-name"]').val()
+
+submitQuiz = ->
+  answers =
+    multiChoice: do getMultiChoiceAnswers
+    challenge: ($ '[name="challenge"]').val()
+    participantName: ($ '[name="participant-name"]').val()
 
   do submitButton.setSubmitting
 
-  $.post '/api/response', answers, ->
+  $.post '/api/response', answers, (response) ->
     setTimeout ->
       console.log 'Submitted'
-      do submitButton.setSubmitted
+      if response.result is 'ok'
+        do submitButton.setSubmitted
+      else
+        do submitButton.setMissingData
     , 300
+
+
+setupListeners = ->
+  ($ document).ready ->
+    do renderQuiz
+
+  ($ 'form').on 'submit', (e) ->
+    e.preventDefault()
+    do submitQuiz
 
 
 do setupListeners

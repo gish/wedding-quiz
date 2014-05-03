@@ -5,6 +5,7 @@ bodyParser = require 'body-parser'
 sass = require 'node-sass'
 coffeeMiddleware = require 'coffee-middleware'
 browserify = require 'browserify-middleware'
+validator = require './validator.coffee'
 
 app = express()
 
@@ -24,6 +25,7 @@ app.use sass.middleware
 browserify.settings 'transform', ['coffeeify', 'hbsfy']
 app.use '/javascripts/app.js', browserify 'public/javascripts/app.coffee'
 
+numQuestions = 10
 
 
 ########
@@ -38,8 +40,9 @@ app.get '/api', (req, res) ->
 
 # Submit answers
 app.post '/api/response', (req, res) ->
-  console.log req.body
-  sendJsonResponse res, result: 'ok'
+  response = req.body
+  result = validator.validate response, numQuestions
+  sendJsonResponse res, result: if result then 'ok' else 'fail'
 
 # Get all results
 app.get '/api/result', (req, res) ->
@@ -55,6 +58,6 @@ app.get '/api/result', (req, res) ->
 
 # Get quiz information
 app.get '/api/quiz', (req, res) ->
-  sendJsonResponse res, num: 10
+  sendJsonResponse res, num: numQuestions
 
 module.exports = app
