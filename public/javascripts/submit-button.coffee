@@ -2,10 +2,10 @@ class SubmitButton
   constructor: (@$el) ->
 
   setSubmitting: ->
-    @$el.val 'Skickar in svar'
+    @$el.text 'Skickar in svar'
       .prop 'disabled', true
 
   setSubmitted: ->
-    @$el.val 'Ditt svar är lämnat'
+    @$el.text 'Ditt svar är lämnat'
 
 module.exports = SubmitButton

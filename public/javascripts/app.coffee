@@ -37,11 +37,10 @@ setupListeners = ->
 
 
 submitQuiz = ->
-  $submitButton = $ '[type="submit"]'
   answers = {}
   $multiChoice = ($ '[name^="option"]:checked')
   $multiChoice.each ->
-    $choice = $ this
+    $choice = ($ this)
     num = ($choice.attr 'name').replace 'option-', ''
     choice = $choice.attr 'value'
     answers[num] = choice
