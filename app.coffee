@@ -1,17 +1,35 @@
 express = require 'express'
 path = require 'path'
-app = express()
 mongoose = require 'mongoose'
 bodyParser = require 'body-parser'
+sass = require 'node-sass'
+coffeeMiddleware = require 'coffee-middleware'
+app = express()
+
 
 # database
-mongoose.connect 'mongodb://localhost/wedding-quiz'
+#mongoose.connect 'mongodb://localhost/wedding-quiz'
 
-sendJsonResponse = (res, response) ->
-  res.format json: -> res.send response
-
+###############
+# Configuration
 app.use bodyParser()
 app.use express.static path.join __dirname, 'public'
+app.use sass.middleware
+  src: "#{__dirname}/public/"
+  dest: "#{__dirname}/public/"
+  debug: true
+
+app.use coffeeMiddleware
+  src: "#{__dirname}/public/"
+  dest: "#{__dirname}/public/"
+  debug: true
+
+
+########
+# Routes
+## Help methods
+sendJsonResponse = (res, response) ->
+  res.format json: -> res.send response
 
 app.get '/api', (req, res) ->
   res.send 'API is running'
