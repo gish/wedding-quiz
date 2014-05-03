@@ -20,10 +20,6 @@ app.use sass.middleware
   dest: "#{__dirname}/public/"
   debug: true
 
-#app.use coffeeMiddleware
-  #src: "#{__dirname}/public/"
-  #dest: "#{__dirname}/public/"
-  #debug: true
 
 browserify.settings 'transform', ['coffeeify']
 app.use '/javascripts/app.js', browserify 'public/javascripts/app.coffee'
