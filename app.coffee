@@ -31,8 +31,8 @@ numQuestions = 10
 ########
 # Routes
 ## Help methods
-sendJsonResponse = (res, response) ->
-  res.format json: -> res.send response
+sendJsonResponse = (res, response, code = 200) ->
+  res.json code, response
 
 app.get '/api', (req, res) ->
   res.send 'API is running'
@@ -40,9 +40,14 @@ app.get '/api', (req, res) ->
 
 # Submit answers
 app.post '/api/response', (req, res) ->
-  response = req.body
-  result = validator.validate response, numQuestions
-  sendJsonResponse res, result: if result then 'ok' else 'fail'
+  submittedResponse = req.body
+  result = validator.validate submittedResponse, numQuestions
+
+  if result
+    res.json 200, result: 'ok'
+  else
+    res.json 400, result: 'missingData'
+
 
 # Get all results
 app.get '/api/result', (req, res) ->

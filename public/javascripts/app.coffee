@@ -46,15 +46,11 @@ submitQuiz = ->
 
   do submitButton.setSubmitting
 
-  $.post '/api/response', answers, (response) ->
-    setTimeout ->
-      console.log 'Submitted'
-      if response.result is 'ok'
-        do submitButton.setSubmitted
-      else
-        do submitButton.setMissingData
-    , 300
-
+  promise = $.post '/api/response', answers
+  promise.done ->
+    do submitButton.setSubmitted
+  promise.fail ->
+    do submitButton.setMissingData
 
 setupListeners = ->
   ($ document).ready ->
