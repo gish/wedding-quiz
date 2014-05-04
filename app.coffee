@@ -7,11 +7,14 @@ coffeeMiddleware = require 'coffee-middleware'
 browserify = require 'browserify-middleware'
 validator = require './validator.coffee'
 
+# Schemas
+QuizResponse = require './schemas/response.coffee'
+
 app = express()
 
 
 # database
-#mongoose.connect 'mongodb://localhost/wedding-quiz'
+mongoose.connect 'mongodb://localhost/wedding-quiz'
 
 ###############
 # Configuration
@@ -28,6 +31,14 @@ app.use '/javascripts/app.js', browserify 'public/javascripts/app.coffee'
 numQuestions = 10
 
 
+saveResponse = (response) ->
+  quizResponse = new QuizResponse
+    participantName: response.participantName
+    challenge: response.challenge
+    multiChoice: response.multiChoice
+  do quizResponse.save
+
+
 ########
 # Routes
 ## Help methods
@@ -40,10 +51,11 @@ app.get '/api', (req, res) ->
 
 # Submit answers
 app.post '/api/response', (req, res) ->
-  submittedResponse = req.body
-  result = validator.validate submittedResponse, numQuestions
+  response = req.body
+  result = validator.validate response, numQuestions
 
   if result
+    saveResponse response
     res.json 200, result: 'ok'
   else
     res.json 400, result: 'missingData'
