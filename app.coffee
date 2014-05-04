@@ -5,12 +5,12 @@ bodyParser = require 'body-parser'
 sass = require 'node-sass'
 coffeeMiddleware = require 'coffee-middleware'
 browserify = require 'browserify-middleware'
-validator = require './validator.coffee'
+validator = require './lib/validator.coffee'
 sort = new (require 'node-sort')()
 Promise = require 'promise'
 
 # Schemas
-QuizResponse = require './schemas/response.coffee'
+QuizResponse = require './lib/models/response.coffee'
 
 app = express()
 
