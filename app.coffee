@@ -85,10 +85,12 @@ app.get '/api/result', (req, res) ->
         multiChoice: getMultiChoiceScore response
 
     results = sort.mergeSort results, (left, right) ->
+      a = left.multiChoice
+      b = right.multiChoice
       switch
-        when left.multiChoice > right.multiChoice then -1
-        when left.multiChoice is right.multiChoice then 0
-        when left.multiChoice < right.multiChoice then 1
+        when a > b then -1
+        when a is b then 0
+        when a < b then 1
 
     res.json 200, results
 
