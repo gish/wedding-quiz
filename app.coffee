@@ -6,6 +6,8 @@ sass = require 'node-sass'
 coffeeMiddleware = require 'coffee-middleware'
 browserify = require 'browserify-middleware'
 validator = require './validator.coffee'
+sort = new (require 'node-sort')()
+Promise = require 'promise'
 
 # Schemas
 QuizResponse = require './schemas/response.coffee'
@@ -28,7 +30,8 @@ app.use sass.middleware
 browserify.settings 'transform', ['coffeeify', 'hbsfy']
 app.use '/javascripts/app.js', browserify 'public/javascripts/app.coffee'
 
-numQuestions = 10
+numQuestions = 3
+multiChoiceAnswers = ['1','x','2']
 
 
 saveResponse = (response) ->
@@ -38,6 +41,17 @@ saveResponse = (response) ->
     multiChoice: response.multiChoice
   do quizResponse.save
 
+
+getAllResponses = ->
+  dfd = new Promise (resolve, reject) ->
+    QuizResponse.find (err, responses) ->
+      if not err then resolve responses
+
+getMultiChoiceScore = (response) ->
+  total = 0
+  for answer, key in response.multiChoice
+    if answer is multiChoiceAnswers[key] then total++
+  total
 
 ########
 # Routes
@@ -63,15 +77,20 @@ app.post '/api/response', (req, res) ->
 
 # Get all results
 app.get '/api/result', (req, res) ->
-  sendJsonResponse res,
-    [
-      name: 'Erik'
-      score: 10
-    ,
-      name: 'Åsa'
-      score: 12
-    ]
+  getAllResponses().then (responses) ->
+    results = []
+    for response in responses
+      results.push
+        name: response.participantName
+        multiChoice: getMultiChoiceScore response
 
+    results = sort.mergeSort results, (left, right) ->
+      switch
+        when left.multiChoice > right.multiChoice then -1
+        when left.multiChoice is right.multiChoice then 0
+        when left.multiChoice < right.multiChoice then 1
+
+    res.json 200, results
 
 # Get quiz information
 app.get '/api/quiz', (req, res) ->
