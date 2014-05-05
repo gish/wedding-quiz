@@ -29,6 +29,7 @@ app.use sass.middleware
 
 browserify.settings 'transform', ['coffeeify', 'hbsfy']
 app.use '/javascripts/app.js', browserify 'public/javascripts/app.coffee'
+app.use '/javascripts/result.js', browserify 'public/javascripts/result.coffee'
 
 numQuestions = 3
 multiChoiceAnswers = ['1','x','2']
