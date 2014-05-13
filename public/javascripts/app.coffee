@@ -1,6 +1,7 @@
 $ = require './vendor/jquery-1.11.1'
 Promise = require 'promise'
 SubmitButton = require './submit-button.coffee'
+Message = require './message.coffee'
 
 ## Templates
 templates =
@@ -38,6 +39,17 @@ getMultiChoiceAnswers = ->
   answers
 
 
+showSuccessMessage = ->
+  message = new Message 'success', 'Dina svar är inskickade'
+  ($ 'body').append message.render().$el
+
+
+showErrorMessage = ->
+  message = new Message 'error', 'Svaren kunde inte skickas in. Fyllde du i alla?'
+  ($ 'body').append message.render().$el
+
+
+
 submitQuiz = ->
   answers =
     multiChoice: do getMultiChoiceAnswers
@@ -49,8 +61,10 @@ submitQuiz = ->
   promise = $.post '/api/response', answers
   promise.done ->
     do submitButton.setSubmitted
+    do showSuccessMessage
   promise.fail ->
-    do submitButton.setMissingData
+    do submitButton.setDefault
+    do showErrorMessage
 
 setupListeners = ->
   ($ document).ready ->

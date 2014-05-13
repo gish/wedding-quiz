@@ -1,5 +1,11 @@
 class SubmitButton
   constructor: (@$el) ->
+    @defaultText = @$el.text()
+
+  setDefault: ->
+    @$el.text @defaultText
+      .prop 'disabled', false
+      .removeClass 'is-error'
 
   setSubmitting: ->
     @$el.text 'Skickar in svar'

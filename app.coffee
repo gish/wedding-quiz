@@ -22,11 +22,11 @@ mongoose.connect 'mongodb://localhost/wedding-quiz'
 ###############
 # Configuration
 app.use bodyParser()
-app.use express.static path.join __dirname, 'public'
 app.use sass.middleware
   src: "#{__dirname}/public/"
   dest: "#{__dirname}/public/"
   debug: true
+app.use express.static path.join __dirname, 'public'
 
 browserify.settings 'transform', ['coffeeify', 'hbsfy']
 app.use '/javascripts/app.js', browserify 'public/javascripts/app.coffee'

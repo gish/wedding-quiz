@@ -65,3 +65,32 @@ dd {
 [type="text"] {
     @include text-input();
 }
+
+
+/**************
+ * Messages
+ **************/
+.message {
+    $height: 50px;
+    position: fixed;
+    top: 25%;
+    left: 0;
+    right: 0;
+    height: 50%;
+    line-height: $height;
+    text-align: center;
+}
+
+.message--success {
+    background: #0c0;
+}
+
+.message--error {
+    background: #c00;
+}
+
+.message__container {
+    @include text(#333, center);
+    margin-top: 10%;
+    font-size: 2em;
+}
