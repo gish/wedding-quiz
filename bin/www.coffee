@@ -1,4 +1,3 @@
-#!/usr/bin/env coffee
 debug = require("debug")("wedding-quiz")
 app = require("../app")
 app.set "port", process.env.PORT or 3000
