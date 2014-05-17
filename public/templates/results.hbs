@@ -1,9 +1,14 @@
-<table>
+<table class="result-list">
+    <tr class="result-list__row">
+        <th class="result-list__header">Namn</th>
+        <th class="result-list__header">Antal rätt</th>
+        <th class="result-list__header">Längd fr rätt svar</th>
+    </tr>
     {{#each this}}
-        <tr>
-            <td>{{name}}</td>
-            <td>{{multiChoice}}</td>
-            <td>{{challenge}}</td>
+        <tr class="result-list__row">
+            <td class="result-list__entry">{{name}}</td>
+            <td class="result-list__entry">{{multiChoice}}</td>
+            <td class="result-list__entry">{{challenge}}</td>
         </tr>
     {{/each}}
 </table>
