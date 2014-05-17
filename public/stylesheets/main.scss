@@ -63,7 +63,8 @@ dd {
     width: 100%;
 }
 
-[type="text"] {
+[type="text"],
+[type="tel"] {
     @include text-input();
 }
 
