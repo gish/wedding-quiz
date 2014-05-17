@@ -54,7 +54,7 @@ getMultiChoiceScore = (response) ->
   total
 
 getChallengeScore = (response) ->
-  Math.abs(config.challenge - response.challenge)
+  Math.abs(config.challenge - parseInt(response.challenge ,10))
 
 ########
 # Routes
