@@ -18,7 +18,7 @@ config =
     '1'
     '1'
   ]
-  challenge: 0
+  challenge: 192
 
 
 module.exports = config
