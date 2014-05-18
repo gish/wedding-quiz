@@ -2,6 +2,7 @@ $ = require './vendor/jquery-1.11.1'
 Promise = require 'promise'
 SubmitButton = require './submit-button.coffee'
 Message = require './message.coffee'
+storage = require './storage.coffee'
 
 ## Templates
 templates =
@@ -23,9 +24,11 @@ renderQuizQuestion = (num) ->
 
 
 renderQuiz = ->
-  getQuizQuestions().then (questions) ->
-    total = questions.num
-    renderQuizQuestion num for num in [1..total] by 1
+  dfd = new Promise (resolve, reject) ->
+    getQuizQuestions().then (questions) ->
+      total = questions.num
+      renderQuizQuestion num for num in [1..total] by 1
+      do resolve
 
 
 getMultiChoiceAnswers = ->
@@ -66,13 +69,14 @@ submitQuiz = ->
       do submitButton.setDefault
       do showErrorMessage
 
-setupListeners = ->
-  ($ document).ready ->
-    do renderQuiz
+runApp = ->
+  renderQuiz().then ->
+    storage.load()
+       .listen()
 
   ($ 'form').on 'submit', (e) ->
     e.preventDefault()
     do submitQuiz
 
 
-do setupListeners
+do runApp
