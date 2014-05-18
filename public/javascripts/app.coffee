@@ -58,13 +58,13 @@ submitQuiz = ->
 
   do submitButton.setSubmitting
 
-  promise = $.post '/api/response', answers
-  promise.done ->
-    do submitButton.setSubmitted
-    do showSuccessMessage
-  promise.fail ->
-    do submitButton.setDefault
-    do showErrorMessage
+  $.post '/api/response', answers
+    .done ->
+      do submitButton.setSubmitted
+      do showSuccessMessage
+    .fail ->
+      do submitButton.setDefault
+      do showErrorMessage
 
 setupListeners = ->
   ($ document).ready ->
