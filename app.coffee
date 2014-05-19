@@ -25,7 +25,8 @@ app.use bodyParser()
 app.use sass.middleware
   src: "#{__dirname}/public/"
   dest: "#{__dirname}/public/"
-  debug: true
+  outputStyle: if process.env.NODE_ENV is 'production' then 'compressed' else 'nested'
+
 app.use express.static path.join __dirname, 'public'
 
 browserify.settings 'transform', ['coffeeify', 'hbsfy']
@@ -58,6 +59,7 @@ getChallengeScore = (response) ->
 
 ########
 # Routes
+
 ## Help methods
 sendJsonResponse = (res, response, code = 200) ->
   res.json code, response
